@@ -8,6 +8,7 @@
 #ifndef _TEST_H
 #define _TEST_H
 
+#include <linklist.h>
 #define COLOR(a, b) "\033[" #b "m" a "\033[0m"
 #define COLOR_HL(a, b) "\033[1;" #b "m" a "\033[0m"
 

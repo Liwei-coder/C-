@@ -8,16 +8,19 @@
 #include <string.h>
 #include <test.h>
 #include <math.h>
+#include <linklist.h>
+#include <stdlib.h>
 
 int func_cnt = 0;
-Function func_arr[100];
+Function func_head, *func_tail = &func_head;
 struct FunctionInfo test_info;
 
 int RUN_ALL_TESTS() {
-    for (int i = 0; i < func_cnt; i++) {
-        printf(GREEN("[====RUN====]:") RED("%s\n"), func_arr[i].str);
+    for (struct LinkNode *p = func_head.p.next; p; p = p->next) {
+        Function *func = Head(p, Function, p);
+        printf(GREEN("[====RUN====]:") RED("%s\n"), func->str);
         test_info.total = 0, test_info.success = 0;
-        func_arr[i].func();
+        func->func();
         double rate = test_info.success * 1.0 / test_info.total;
         rate *= 100;
         printf(PURPLE("[  "));
@@ -35,8 +38,10 @@ int RUN_ALL_TESTS() {
 }
 
 void add_function(TestFuncT func, const char *str) {
-    func_arr[func_cnt].func = func;
-    func_arr[func_cnt].str = strdup(str);
-    func_cnt++;
+    Function *temp = (Function *)calloc(1, sizeof(Function));
+    temp->func = func;
+    temp->str = strdup(str);
+    func_tail->p.next = &(temp->p);
+    func_tail = temp;
     return ;
 }

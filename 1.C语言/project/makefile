@@ -1,7 +1,7 @@
 .PHONY: clean
 all: bin/program 
 	./bin/program
-src/test.o: include/test.h src/test.c 
+src/test.o: include/test.h src/test.c include/linklist.h
 	gcc -I./include -c src/test.c -o src/test.o
 bin/program: main.c include/test.h src/test.o
 	gcc -I./include  main.c src/test.o -o bin/program
